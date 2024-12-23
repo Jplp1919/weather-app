@@ -4,10 +4,16 @@ import SearchBar from "./components/SearchBar";
 import WeatherDetails from "./components/WeatherDetails";
 import Forecast from "./components/Forecast";
 import './App.css';
+import translations from "./translations";
 
 const App = () => {
   const [weather, setWeather] = useState(null);
   const [forecast, setForecast] = useState(null);
+  const [language, setLanguage] = useState("en");
+
+  const toggleLanguage = () => {
+    setLanguage((prev) => (prev === "en" ? "pt_br" : "en"));
+  };
 
   const API_KEY = "a2732ae5f1f8452ed929eb74dd458655";
 
@@ -39,10 +45,15 @@ const App = () => {
 
   return (
     <div>
-      <h1>Weather App</h1>
-      <SearchBar onSearch={handleSearch} />
-      <WeatherDetails weather={weather} />
-      <Forecast forecast={forecast} />
+      <h1>{translations[language].title}</h1>
+      <button onClick={toggleLanguage}>
+        {language === "en"
+          ? translations[language].switchToPortuguese
+          : translations[language].switchToEnglish}
+      </button>
+      <SearchBar onSearch={handleSearch} language={language} />
+      <WeatherDetails language={language} weather={weather} />
+      <Forecast language={language} forecast={forecast} />
     </div>
   );
 };

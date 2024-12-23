@@ -1,11 +1,14 @@
 import React from "react";
+import translations from "../translations";
+import translateDescription from "../utils/translateDescription";
 
-const Forecast = ({ forecast }) => {
+const Forecast = ({ forecast, language }) => {
   if (!forecast) return null;
+
 
   return (
     <div>
-      <h3>5-Day Forecast</h3>
+      <h3>{translations[language].forecastTitle}</h3>
       <div style={{ display: "flex", gap: "10px" }}>
         {forecast.map((day, index) => (
           <div key={index}>
@@ -15,6 +18,7 @@ const Forecast = ({ forecast }) => {
               alt={day.description}
             />
             <p>{Math.round(day.temp)}°C</p>
+            <p>{translateDescription(day.description, language)}</p>
           </div>
         ))}
       </div>
